@@ -1,0 +1,103 @@
+// ------------- Netflix. Customer - CRUD -------------
+
+// Leer clientes
+# GET http://localhost:8080/netflix/products
+
+
+// Leer visuals customer
+# GET http://localhost:8080/netflix/visual?c=Raul
+
+
+// Crear cliente
+# POST http://localhost:8080/netflix/customer
+# Content-Type: application/json
+
+# {
+#     "name": "Pepe",
+#     "surname": "Perez",
+#     "birthdate": null,
+#     "address": null,
+#     "city": "Sev",
+#     "dni": "666",
+#     "country": null,
+#     "mobileNumber": null,
+#     "gender": null
+# }
+
+
+// Crear visualizacion a cliente
+# POST http://localhost:8080/netflix/visual?c=Raul
+# Content-Type: application/json
+
+# {
+#     "inicio": "2020-07-01T02:00:00",
+#     "fin": "2020-07-01T02:15:00",
+#     "producto": {
+#         "idProduct": 0,
+#         "title": "Senderos de gloria",
+#         "categoria": "DRAMA",
+#         "tipoContenido": "MOVIE",
+#         "tipoSuscripcion": "PREMIUM"
+#     }
+# }
+
+
+// Actualizar nombre cliente
+# PUT http://localhost:8080/netflix/customer?oldName=Alvaro&newName=OtroNombre
+
+
+// Eliminar cliente
+# DELETE http://localhost:8080/netflix/customer?name=Yi
+
+// ------------- Netflix. Customer - CRUD -------------
+
+
+
+
+// ------------- Netflix. Products - CRUD -------------
+
+// Leer productos
+# GET http://localhost:8080/netflix/products
+
+
+// Crear película
+# POST http://localhost:8080/netflix/products/movie
+# Content-Type: application/json
+
+# {
+#     "title": "nuevaPelicula",
+#     "categoria": "SCIFI",
+#     "tipoContenido": "MOVIE",
+#     "tipoSuscripcion": "BASIC"
+# }
+
+
+// Crear serie
+# POST http://localhost:8080/netflix/products/serie
+# Content-Type: application/json
+
+# {
+#     "title": "nuevaSerie",
+#     "categoria": "SCIFI",
+#     "tipoContenido": "SERIE",
+#     "tipoSuscripcion": "BASIC"
+# }
+
+
+// Modificar título película
+# PUT http://localhost:8080/netflix/products/movie?oldTitle=Origen&newTitle=OtraPeli
+
+
+// Modificar título serie
+# PUT http://localhost:8080/netflix/products/serie?oldTitle=Dark&newTitle=TituloModificado
+
+
+// Eliminar película
+# DELETE http://localhost:8080/netflix/products/movie?title=Senderos de gloria
+
+
+// Eliminar serie
+# DELETE http://localhost:8080/netflix/products/serie?title=Dark
+
+
+// ------------- Netflix. Products - CRUD -------------
