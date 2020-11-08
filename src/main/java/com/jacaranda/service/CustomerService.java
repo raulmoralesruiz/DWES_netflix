@@ -64,6 +64,16 @@ public class CustomerService {
 	}
 	
 	
+	public ResponseEntity<?> getCustomersByUsername() {
+		return ResponseEntity.status(HttpStatus.OK).body(customerRepo.findCustomersByUsername());
+	}
+	
+	
+	/** PENDIENTE - Query parametrizada */
+//	public ResponseEntity<?> getCustomersByIdAndUsername() {
+//		return ResponseEntity.status(HttpStatus.OK).body(customerRepo.findCustomersByIdAndUsername());
+//	}
+	
 	
 	// ----- POST -----
 	
@@ -106,12 +116,17 @@ public class CustomerService {
 	 */
 	public List<Visual> getCustomerVisuals(Long idCustomer) {
 		
+		List<Visual> auxVisuals = null;
+		
 		// se guarda el cliente en una variable auxiliar
 		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 
-		// se crea la lista con las visualizaciones del cliente
-		List<Visual> auxVisuals = auxCustomer.getVisuals();
-
+		// se comprueba si el cliente tiene visualizaciones.
+		if (!auxCustomer.getVisuals().isEmpty()) {
+			// se crea la lista con las visualizaciones del cliente
+			auxVisuals = auxCustomer.getVisuals();
+		}
+		
 		// se devuelve la lista
 		return auxVisuals;
 	}

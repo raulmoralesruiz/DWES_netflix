@@ -30,9 +30,28 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 	
 	/**
 	 * Método que busca los clientes y los ordena por DNI
-	 * @return
+	 * @return List<Customer>
 	 */
 	@Query(value = "select * from customer order by dni", nativeQuery = true)
 	public List<Customer> findAllOrderedByDni();
+	
+	
+	/**
+	 * Método que muestra el username de cada cliente, ordenado alfabéticamente
+	 * @return List<String>
+	 */
+	@Query(value = "select username from customer order by username", nativeQuery = true)
+	public List<String> findCustomersByUsername();
 
+	
+	/** PENDIENTE - Query parametrizada */
+//	/**
+//	 * Método que muestra el id de cliente, pasando el username como parametro
+//	 * @return List<Customer>
+//	 */
+//	@Query(value = "select id from customer where username = 'name'", nativeQuery = true)
+//	public List<String> getCustomersByIdAndUsername();
+////	SELECT id from customer where username = 'raulmr'
+	
+		
 }

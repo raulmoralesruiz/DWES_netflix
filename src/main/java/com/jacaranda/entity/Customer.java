@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,8 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false)
+	private String username;
 	private String name;
 	private String surname;
 	private String address;
@@ -36,7 +39,7 @@ public class Customer implements Serializable {
 	public Customer() {
 	}
 	
-	public Customer(String name, String surname, String address, String city, String dni, Suscription suscription) {
+	public Customer(String username, String name, String surname, String address, String city, String dni, Suscription suscription) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -54,6 +57,13 @@ public class Customer implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getName() {
 		return name;
@@ -103,6 +113,8 @@ public class Customer implements Serializable {
 	public void setSuscription(Suscription suscription) {
 		this.suscription = suscription;
 	}
+
+	
 	
 	
 	

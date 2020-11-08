@@ -1,8 +1,11 @@
 package com.jacaranda.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,7 @@ import com.jacaranda.service.CustomerService;
  */
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/netflix")
 public class CustomerController {
 		
@@ -92,6 +96,29 @@ public class CustomerController {
 	}
 	
 	
+	/**
+	 * GET. Método para mostrar username de cada cliente, ordenados alfabéticamente.
+	 * 
+	 * @return ResponseEntity<?>
+	 */
+	@GetMapping("/customer/username")
+	public ResponseEntity<?> getCustomersByUsername(){
+		return customerService.getCustomersByUsername();
+	}
+	
+
+	/** PENDIENTE - Query parametrizada */
+	/**
+	 * GET. Método para mostrar username de cada cliente, ordenados alfabéticamente.
+	 * 
+	 * @return ResponseEntity<?>
+	 */
+//	@GetMapping("/customer/iduser")
+//	public ResponseEntity<?> getCustomersByIdAndUsername(){
+//		return customerService.getCustomersByIdAndUsername();
+//	}
+	
+	
 	
 	// ----- POST -----	
 	
@@ -152,8 +179,17 @@ public class CustomerController {
 	 * @return
 	 */
 	@GetMapping("/visual/c{idCustomer}")
-	public ResponseEntity<?> getCustomerVisuals(@PathVariable Long idCustomer) {
-		return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerVisuals(idCustomer));		
+	public ResponseEntity<?> getCustomerVisuals(@PathVariable Long idCustomer) {			
+		ResponseEntity<?> response = null;
+		List<Visual> resultado = customerService.getCustomerVisuals(idCustomer);
+
+		if (resultado == null) {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR. El cliente (" + idCustomer + ") no tiene visualizaciones");
+		} else {
+			response = ResponseEntity.status(HttpStatus.OK).body(resultado);
+		}
+		
+		return response;
 	}
 	
 	
@@ -205,6 +241,7 @@ public class CustomerController {
 	 * 
 	 * @return ResponseEntity<?>
 	 */
+	@CrossOrigin(origins = "*")
 	@GetMapping("/suscription")
 	public ResponseEntity<?> getSuscriptions() {
 		return customerService.getSuscriptions();
@@ -233,6 +270,7 @@ public class CustomerController {
 	 * @param idCustomer
 	 * @return ResponseEntity<?>
 	 */
+	@CrossOrigin(origins = "*")
 	@PostMapping("/suscription/c{idCustomer}")
 	public ResponseEntity<?> addSuscription(@RequestBody Suscription newSuscription, @PathVariable Long idCustomer) {
 		
