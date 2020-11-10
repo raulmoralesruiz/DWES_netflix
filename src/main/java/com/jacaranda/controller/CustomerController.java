@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.jacaranda.service.IService;
 import com.jacaranda.entity.Customer;
 import com.jacaranda.entity.Suscription;
 import com.jacaranda.entity.Visual;
@@ -32,6 +35,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
+	@Autowired
+	private IService<Customer> service;
 	
 	// ------------------------------------------------ CRUD CUSTOMER ------------------------------------------------
 	
@@ -304,8 +309,22 @@ public class CustomerController {
 	public void deleteSuscription(@PathVariable Long idCustomer){
 		customerService.deleteSuscription(idCustomer);
 	}
-
 	
 	// ----------------------------------------------- CRUD SUSCRIPTION ----------------------------------------------
+	
+	
+	/**
+	 * PUT. Método para subir archivo, se guarda en la BBDD.
+	 * 
+	 * @param file File to store
+	 * @param id  Customer whose documents would be updated
+	 * @return
+	 */
+	@PutMapping("/customer/{id}")
+	public ResponseEntity<?> uploadFile(MultipartFile file, @PathVariable Long id) {
+		service.addDocument(id, file);
+		return ResponseEntity.ok("File " + file.getOriginalFilename() + " successfully uploaded");
+	}
+
 	
 }

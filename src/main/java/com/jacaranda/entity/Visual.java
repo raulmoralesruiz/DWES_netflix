@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 public class Visual {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idVisual;
 	

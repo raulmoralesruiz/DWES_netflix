@@ -1,5 +1,6 @@
 package com.jacaranda.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jacaranda.entity.Customer;
+import com.jacaranda.entity.Document;
 import com.jacaranda.entity.Product;
 import com.jacaranda.entity.Suscription;
 import com.jacaranda.entity.Visual;
 import com.jacaranda.repository.CustomerRepository;
+import com.jacaranda.repository.DocumentRepository;
 import com.jacaranda.repository.ProductRepository;
 import com.jacaranda.repository.SuscriptionRepository;
 import com.jacaranda.repository.VisualRepository;
 
+
 @Service
-public class CustomerService {
+public class CustomerService extends AbstractServiceUtils implements IService<Customer> {
 
 	@Autowired
 	private CustomerRepository customerRepo;
@@ -33,6 +38,12 @@ public class CustomerService {
 	@Autowired
 	private SuscriptionRepository suscriptionRepo;
 
+	
+	@Autowired
+	private DocumentRepository documentRepository;
+
+	@Autowired
+	private FileHandlerService fhService;
 	
 	
 	// ---------------------------------------------- CUSTOMER ----------------------------------------------
@@ -286,4 +297,27 @@ public class CustomerService {
 	
 	// ---------------------------------------- CUSTOMER - SUSCRIPTION ---------------------------------------
 
+	@Override
+	public Customer addDocument(Long id, MultipartFile mpf) {
+		Customer c = null;
+
+		try {
+			Document doc = documentRepository.save(new Document(
+							fhService.createBlob(mpf), 
+							mpf.getOriginalFilename(), 
+							Integer.valueOf((int) mpf.getSize())));
+
+			c = customerRepo.findById(id).get();
+			c.setDocuments(c.getDocuments() != null && !c.getDocuments().isEmpty() ? c.getDocuments() : new ArrayList<>());
+			c.getDocuments().add(doc);
+			customerRepo.save(c);
+
+		} catch (NumberFormatException e) {
+			logger.debug(String.format("Customer with identifier %s could not be found ", id));
+		}
+
+		return c;
+	}
+
+	
 }
