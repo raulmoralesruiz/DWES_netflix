@@ -1,8 +1,10 @@
 package com.jacaranda.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jacaranda.service.IService;
 import com.jacaranda.entity.Customer;
+import com.jacaranda.entity.Document;
 import com.jacaranda.entity.Suscription;
 import com.jacaranda.entity.Visual;
 import com.jacaranda.service.CustomerService;
@@ -312,7 +315,47 @@ public class CustomerController {
 	
 	// ----------------------------------------------- CRUD SUSCRIPTION ----------------------------------------------
 	
+	// ---------------------------------------------- CUSTOMER - DOCUMENT --------------------------------------------
+
+	// ----- GET -----	
+
+	/**
+	 * GET. Método que lee/visualiza un documento
+	 * 
+	 * @param idDoc
+	 * @return ResponseEntity<Resource>
+	 * @throws SQLException
+	 */
+	@GetMapping("/document/{id}")
+	public ResponseEntity<Resource> viewDocument(@PathVariable ("id") Long idDoc) throws SQLException{
+		return customerService.viewDocument(idDoc);
+	}
 	
+	
+	/**
+	 * GET. Mostrar los documentos de un cliente concreto
+	 * 
+	 * @param idCustomer
+	 * @return
+	 */
+	@GetMapping("/document/c{idCustomer}")
+	public ResponseEntity<?> getCustomerDocuments(@PathVariable Long idCustomer) {			
+		ResponseEntity<?> response = null;
+		List<Document> resultado = customerService.getCustomerDocuments(idCustomer);
+
+		if (resultado == null) {
+			response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR. El cliente (" + idCustomer + ") no tiene documentos");
+		} else {
+			response = ResponseEntity.status(HttpStatus.OK).body(resultado);
+		}
+		
+		return response;
+	}
+
+
+	
+	// ----- PUT -----	
+
 	/**
 	 * PUT. Método para subir archivo, se guarda en la BBDD.
 	 * 
@@ -325,6 +368,8 @@ public class CustomerController {
 		service.addDocument(id, file);
 		return ResponseEntity.ok("File " + file.getOriginalFilename() + " successfully uploaded");
 	}
+	
+	// ---------------------------------------------- CUSTOMER - DOCUMENT --------------------------------------------
 
 	
 }

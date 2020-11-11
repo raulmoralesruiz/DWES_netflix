@@ -16,18 +16,27 @@ public class Document {
 	private Blob file;
 	private String fileName;	
 	private Integer fileSize;
-	/* fecha, tamaño, formato, host */
+	private String fileType;
 	
 	
 	  
 	public Document() {
 		super();
 	}
-	public Document(Blob file, String fileName, Integer fileSize) {
+	public Document(Blob file, String fileName, Integer fileSize, String fileType) {
 		super();
 		this.file = file;
 		this.fileName = fileName;
 		this.fileSize = fileSize;
+		this.fileType = fileType;
+	}
+	// Constructor para buscar todos los documentos de un cliente (getCustomerDocuments)
+	public Document(Long idDocument, String fileName, Integer fileSize, String fileType) {
+		super();
+		this.idDocument = idDocument;
+		this.fileName = fileName;
+		this.fileSize = fileSize;
+		this.fileType = fileType;
 	}
 	
 	
@@ -55,6 +64,12 @@ public class Document {
 	}
 	public void setFileSize(Integer fileSize) {
 		this.fileSize = fileSize;
+	}
+	public String getFileType() {
+		return fileType;
+	}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
 	
 	

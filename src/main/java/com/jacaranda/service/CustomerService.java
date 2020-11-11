@@ -1,10 +1,15 @@
 package com.jacaranda.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +45,7 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 
 	
 	@Autowired
-	private DocumentRepository documentRepository;
+	private DocumentRepository documentRepo;
 
 	@Autowired
 	private FileHandlerService fhService;
@@ -297,15 +302,71 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	
 	// ---------------------------------------- CUSTOMER - SUSCRIPTION ---------------------------------------
 
+	
+	// ------------------------------------------ CUSTOMER - DOCUMENT ----------------------------------------
+	
+	// ----- GET -----
+	
+	/**
+	 * GET. Método que lee/visualiza un documento
+	 * 
+	 * @param idDoc
+	 * @return
+	 * @throws SQLException
+	 */
+	public ResponseEntity<Resource> viewDocument(Long idDoc) throws SQLException{
+		Document document = documentRepo.findById(idDoc).get();
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(document.getFileType()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + document.getFileName() + "\"")
+                .body(new ByteArrayResource(document.getFile().getBytes(1, (int) document.getFile().length())));
+	}
+	
+	
+	/**
+	 * GET. Método que obtiene los documentos de un cliente
+	 * 
+	 * @param idCustomer
+	 * @return List<Document>
+	 */
+	public List<Document> getCustomerDocuments(Long idCustomer) {
+		
+		List<Document> newDocuments = null;
+		
+		// se guarda el cliente en una variable auxiliar
+		Customer auxCustomer = customerRepo.findById(idCustomer).get();
+
+		// se comprueba si el cliente tiene documentos.
+		if (!auxCustomer.getDocuments().isEmpty()) {			
+			
+			// se inicializa la lista
+			newDocuments = new ArrayList<Document>();
+			
+			// se rellena la lista
+			for (Document d : auxCustomer.getDocuments()) {
+				newDocuments.add(new Document(d.getIdDocument(), d.getFileName(), d.getFileSize(), d.getFileType()));
+			}
+		}
+		
+		// se devuelve la lista
+		return newDocuments;
+	}
+
+
+	
+	// ----- PUT -----
+	
 	@Override
 	public Customer addDocument(Long id, MultipartFile mpf) {
 		Customer c = null;
 
 		try {
-			Document doc = documentRepository.save(new Document(
+			Document doc = documentRepo.save(new Document(
 							fhService.createBlob(mpf), 
 							mpf.getOriginalFilename(), 
-							Integer.valueOf((int) mpf.getSize())));
+							Integer.valueOf((int) mpf.getSize()),
+							mpf.getContentType()));
 
 			c = customerRepo.findById(id).get();
 			c.setDocuments(c.getDocuments() != null && !c.getDocuments().isEmpty() ? c.getDocuments() : new ArrayList<>());
@@ -318,6 +379,8 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 
 		return c;
 	}
-
+	
+	// ------------------------------------------ CUSTOMER - DOCUMENT ----------------------------------------
+	
 	
 }
