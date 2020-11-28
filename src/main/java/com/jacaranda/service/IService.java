@@ -3,6 +3,7 @@ package com.jacaranda.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @Service
 public interface IService<T> {
 	
@@ -19,5 +20,12 @@ public interface IService<T> {
 	 * @return Updated entity
 	 */
 	public T addDocument(Long id, MultipartFile mpf);
+
+	
+//	/**
+//	 * PUT. Método para subir archivo comprimido, se guarda en la BBDD.
+//	 * @throws SQLException 
+//	 */
+//	Customer addDocumentZip(Long id, MultipartFile mpf) throws SQLException;
 	
 }

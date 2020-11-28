@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -51,6 +52,14 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	private FileHandlerService fhService;
 	
 	
+	
+	// TEST
+	public CustomerService(CustomerRepository customerRepo) {
+		this.customerRepo = customerRepo;
+	}
+
+	
+	
 	// ---------------------------------------------- CUSTOMER ----------------------------------------------
 
 	// ----- GET -----
@@ -60,8 +69,13 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	}
 		
 	
-	public Customer getOneCustomerById(Long idCustomer) {		
+	public Customer getOneCustomerByIdSpring(Long idCustomer) {		
 		return customerRepo.findById(idCustomer).get();
+	}
+	
+	
+	public Customer getOneCustomerById(Long idCustomer) {		
+		return customerRepo.findCustomerById(idCustomer);
 	}
 	
 	
@@ -135,7 +149,8 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 		List<Visual> auxVisuals = null;
 		
 		// se guarda el cliente en una variable auxiliar
-		Customer auxCustomer = customerRepo.findById(idCustomer).get();
+		Customer auxCustomer = customerRepo.findCustomerById(idCustomer);
+//		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 
 		// se comprueba si el cliente tiene visualizaciones.
 		if (!auxCustomer.getVisuals().isEmpty()) {
@@ -216,6 +231,7 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	public ResponseEntity<?> getSuscriptions() {
 		return ResponseEntity.status(HttpStatus.OK).body(suscriptionRepo.findAll());
 	}
+	
 	
 	/**
 	 * Método que obtiene la suscripción de un cliente
@@ -357,6 +373,9 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	
 	// ----- PUT -----
 	
+	/**
+	 * PUT. Método para subir archivo, se guarda en la BBDD.
+	 */
 	@Override
 	public Customer addDocument(Long id, MultipartFile mpf) {
 		Customer c = null;
@@ -379,6 +398,47 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 
 		return c;
 	}
+	
+		
+	/**
+	 * PUT. Método para subir archivo ZIP, se guarda en la BBDD.
+	 * @throws SQLException 
+	 */
+//	@Override
+//	public Customer addDocumentZip(Long id, MultipartFile mpf) throws SQLException {
+//		Customer c = null;
+//
+//		/*
+//		 *  String archivo = "prueba.doc"
+//			byte[] data = FileUtils.readFileToByteArray(archivo);
+//		 */
+//		
+//		try {
+//			Document doc = documentRepo.save(new Document(
+//							fhService.createBlob(mpf), 
+//							mpf.getOriginalFilename(), 
+//							Integer.valueOf((int) mpf.getSize()),
+//							mpf.getContentType()));
+//
+//			c = customerRepo.findById(id).get();
+//			c.setDocuments(c.getDocuments() != null && !c.getDocuments().isEmpty() ? c.getDocuments() : new ArrayList<>());
+//			
+////			document.getFile().getBytes(1, (int) document.getFile().length()))
+////			byte[] data = FileUtils.readFileToByteArray(archivo);
+//			byte[] fileInByte = doc.getFile().getBytes(1, (int) doc.getFile().length()); 
+//			Deflater deflater = new Deflater();  
+//			
+//			c.getDocuments().add(doc);
+//			customerRepo.save(c);
+//
+//		} catch (NumberFormatException e) {
+//			logger.debug(String.format("Customer with identifier %s could not be found ", id));
+//		}
+//
+//		return c;
+//	}
+
+	
 	
 	// ------------------------------------------ CUSTOMER - DOCUMENT ----------------------------------------
 	

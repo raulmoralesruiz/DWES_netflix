@@ -12,6 +12,14 @@ import com.jacaranda.entity.Customer;
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
 	/**
+	 * Método que busca un cliente por id
+	 * @param id
+	 * @return Customer
+	 */
+	public Customer findCustomerById(Long id);
+
+	
+	/**
 	 * Método que busca los clientes por nombre y apellido
 	 * @param name
 	 * @param surname
