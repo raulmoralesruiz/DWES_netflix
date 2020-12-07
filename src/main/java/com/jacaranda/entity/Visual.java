@@ -2,7 +2,6 @@ package com.jacaranda.entity;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ public class Visual {
 	@Column(name = "end")			// no necesario
 	private LocalDateTime end;
 	
-	@OneToOne(targetEntity = Product.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(targetEntity = Product.class)
 	private Product product;
 	
 	private Long idCustomer;
@@ -32,16 +31,7 @@ public class Visual {
 	
 	public Visual() {
 		super();
-	}
-//	public Visual(LocalDateTime start, 
-//			LocalDateTime end, Product product) {
-//		super();
-//		this.start = start;
-//		this.end = end;
-//		this.product = product;
-//	}
-	
-	
+	}	
 	public Visual(LocalDateTime start, LocalDateTime end, Product product, Long idCustomer) {
 		super();
 		this.start = start;
