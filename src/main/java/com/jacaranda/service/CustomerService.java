@@ -20,12 +20,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jacaranda.entity.Customer;
 import com.jacaranda.entity.Document;
 import com.jacaranda.entity.Product;
-import com.jacaranda.entity.Suscription;
+import com.jacaranda.entity.Subscription;
 import com.jacaranda.entity.Visual;
 import com.jacaranda.repository.CustomerRepository;
 import com.jacaranda.repository.DocumentRepository;
 import com.jacaranda.repository.ProductRepository;
-import com.jacaranda.repository.SuscriptionRepository;
+import com.jacaranda.repository.SubscriptionRepository;
 import com.jacaranda.repository.VisualRepository;
 
 
@@ -42,7 +42,7 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	private VisualRepository visualRepo;
 	
 	@Autowired
-	private SuscriptionRepository suscriptionRepo;
+	private SubscriptionRepository subscriptionRepo;
 
 	
 	@Autowired
@@ -181,7 +181,7 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 		
 		
 		// se inserta el producto auxiliar a la visualización
-		newVisual.setProducto(auxProduct);
+		newVisual.setProduct(auxProduct);
 		
 		// se inserta el id de cliente a la visualización
 		newVisual.setIdCustomer(idCustomer);
@@ -228,8 +228,8 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	 * 
 	 * @return ResponseEntity<?>
 	 */
-	public ResponseEntity<?> getSuscriptions() {
-		return ResponseEntity.status(HttpStatus.OK).body(suscriptionRepo.findAll());
+	public ResponseEntity<?> getSubscriptions() {
+		return ResponseEntity.status(HttpStatus.OK).body(subscriptionRepo.findAll());
 	}
 	
 	
@@ -239,16 +239,16 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	 * @param idCustomer
 	 * @return Suscription
 	 */
-	public Suscription getCustomerSuscription(Long idCustomer) {
+	public Subscription getCustomerSubscription(Long idCustomer) {
 		
 		// se guarda el cliente en una variable auxiliar
 		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 
 		// se guarda la suscripción en una variable auxiliar
-		Suscription auxSuscription = auxCustomer.getSuscription();
+		Subscription auxSubscription = auxCustomer.getSubscription();
 		
 		// se devuelve la lista
-		return auxSuscription;
+		return auxSubscription;
 	}
 	
 	
@@ -258,29 +258,29 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	/**
 	 * Método que inserta una suscripción a un cliente
 	 * 
-	 * @param newSuscription
+	 * @param newSubscription
 	 * @param idCustomer
 	 * @return
 	 */
-	public Customer addSuscription(Suscription newSuscription, Long idCustomer) {
+	public Customer addSubscription(Subscription newSubscription, Long idCustomer) {
 		// se guarda el cliente en una variable auxiliar
 		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 		
 		// Se comprueba si el cliente tiene alguna suscripción activa.
-		if (auxCustomer.getSuscription() != null) {
+		if (auxCustomer.getSubscription() != null) {
 			// se asigna el cliente a null, para devolverlo al final
 			auxCustomer = null;
 		} else {
-			/** SUSCRIPTION */
+			/** SUBSCRIPTION */
 			// se inserta el id de cliente a la suscripción
-			newSuscription.setIdCustomer(idCustomer);
+			newSubscription.setIdCustomer(idCustomer);
 			
 			// se guarda la suscripción en la BBDD
-			suscriptionRepo.save(newSuscription);
+			subscriptionRepo.save(newSubscription);
 			
 			/** CUSTOMER */
 			// se inserta la suscripción al cliente
-			auxCustomer.setSuscription(newSuscription);
+			auxCustomer.setSubscription(newSubscription);
 			
 			// se guarda el cliente en la BBDD
 			customerRepo.save(auxCustomer);
@@ -299,18 +299,18 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 	
 	// ----- DELETE -----
 	
-	public void deleteSuscription(Long idCustomer) {
+	public void deleteSubscription(Long idCustomer) {
 		// se guarda el cliente en una variable auxiliar
 		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 		
 		// se guarda la suscripción en una variable auxiliar
-		Suscription auxSuscription = auxCustomer.getSuscription();
+		Subscription auxSubscription = auxCustomer.getSubscription();
 
 		// se elimina la suscripción del cliente
-		auxCustomer.setSuscription(null);
+		auxCustomer.setSubscription(null);
 		
 		// se elimina la suscripción en la BBDD
-		suscriptionRepo.delete(auxSuscription);
+		subscriptionRepo.delete(auxSubscription);
 		
 		// se guarda el cliente en la BBDD
 		customerRepo.save(auxCustomer);

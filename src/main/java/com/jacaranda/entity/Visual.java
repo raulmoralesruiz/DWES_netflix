@@ -2,6 +2,7 @@ package com.jacaranda.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,14 +17,14 @@ public class Visual {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idVisual;
 	
-	@Column(name = "`inicio`")		// no necesario
-	private LocalDateTime inicio;
+	@Column(name = "start")		// no necesario
+	private LocalDateTime start;
 	
-	@Column(name = "`fin`")			// no necesario
-	private LocalDateTime fin;
+	@Column(name = "end")			// no necesario
+	private LocalDateTime end;
 	
-	@OneToOne(targetEntity = Product.class)
-	private Product producto;
+	@OneToOne(targetEntity = Product.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Product product;
 	
 	private Long idCustomer;
 	
@@ -32,20 +33,20 @@ public class Visual {
 	public Visual() {
 		super();
 	}
-//	public Visual(LocalDateTime inicio, 
-//			LocalDateTime fin, Product producto) {
+//	public Visual(LocalDateTime start, 
+//			LocalDateTime end, Product product) {
 //		super();
-//		this.inicio = inicio;
-//		this.fin = fin;
-//		this.producto = producto;
+//		this.start = start;
+//		this.end = end;
+//		this.product = product;
 //	}
 	
 	
-	public Visual(LocalDateTime inicio, LocalDateTime fin, Product producto, Long idCustomer) {
+	public Visual(LocalDateTime start, LocalDateTime end, Product product, Long idCustomer) {
 		super();
-		this.inicio = inicio;
-		this.fin = fin;
-		this.producto = producto;
+		this.start = start;
+		this.end = end;
+		this.product = product;
 		this.idCustomer = idCustomer;
 	}
 
@@ -58,23 +59,23 @@ public class Visual {
 	public void setIdVisual(Long idVisual) {
 		this.idVisual = idVisual;
 	}
-	public LocalDateTime getInicio() {
-		return inicio;
+	public LocalDateTime getStart() {
+		return start;
 	}
-	public void setInicio(LocalDateTime inicio) {
-		this.inicio = inicio;
+	public void setStart(LocalDateTime start) {
+		this.start = start;
 	}
-	public LocalDateTime getFin() {
-		return fin;
+	public LocalDateTime getEnd() {
+		return end;
 	}
-	public void setFin(LocalDateTime fin) {
-		this.fin = fin;
+	public void setEnd(LocalDateTime end) {
+		this.end = end;
 	}
-	public Product getProducto() {
-		return producto;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProducto(Product producto) {
-		this.producto = producto;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public Long getIdCustomer() {
 		return idCustomer;

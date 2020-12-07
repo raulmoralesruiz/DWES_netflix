@@ -7,41 +7,41 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "Suscription")
-public class Suscription {
+@Entity(name = "Subscription")
+public class Subscription {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idSuscription;
+	private Long idSubscription;
 	
 	private LocalDateTime start;
 	
 	private LocalDateTime end;
 	
-	private SuscriptionEnum typeOfSuscription;
+	private SubscriptionEnum subscriptionType;
 		
 	private Long idCustomer;
 	
 	
 	
-	public Suscription() {
+	public Subscription() {
 		super();
 	}
-	public Suscription(LocalDateTime start, LocalDateTime end, SuscriptionEnum typeOfSuscription, Long idCustomer) {
+	public Subscription(LocalDateTime start, LocalDateTime end, SubscriptionEnum subscriptionType, Long idCustomer) {
 		super();
 		this.start = start;
 		this.end = end;
-		this.typeOfSuscription = typeOfSuscription;
+		this.subscriptionType = subscriptionType;
 		this.idCustomer = idCustomer;
 	}
 	
 	
 	
-	public Long getIdSuscription() {
-		return idSuscription;
+	public Long getIdSubscription() {
+		return idSubscription;
 	}
-	public void setIdSuscription(Long idSuscription) {
-		this.idSuscription = idSuscription;
+	public void setIdSubscription(Long idSubscription) {
+		this.idSubscription = idSubscription;
 	}
 	public LocalDateTime getStart() {
 		return start;
@@ -55,11 +55,11 @@ public class Suscription {
 	public void setEnd(LocalDateTime end) {
 		this.end = end;
 	}
-	public SuscriptionEnum getTypeOfSuscription() {
-		return typeOfSuscription;
+	public SubscriptionEnum getSubscriptionType() {
+		return subscriptionType;
 	}
-	public void setTypeOfSuscription(SuscriptionEnum typeOfSuscription) {
-		this.typeOfSuscription = typeOfSuscription;
+	public void setSubscriptionType(SubscriptionEnum subscriptionType) {
+		this.subscriptionType = subscriptionType;
 	}
 	public Long getIdCustomer() {
 		return idCustomer;

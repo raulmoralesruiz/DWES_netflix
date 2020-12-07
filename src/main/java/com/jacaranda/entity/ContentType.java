@@ -1,5 +1,5 @@
 package com.jacaranda.entity;
 
-public enum TipoContenido {
+public enum ContentType {
 	SERIE, MOVIE, DOCUMENTARY
 }

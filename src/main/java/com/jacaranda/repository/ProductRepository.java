@@ -15,7 +15,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	 * Método que busca los productos disponibles con suscripción de tipo BASIC
 	 * @return List<Product>
 	 */
-	@Query(value = "select * from product where tipo_suscripcion = 0", nativeQuery = true)
+	@Query(value = "select * from product where subscription_type = 0", nativeQuery = true)
 	public List<Product> findBasicProducts();
 	
 	
@@ -23,7 +23,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	 * Método que busca los productos disponibles con suscripción de tipo PREMIM
 	 * @return List<Product>
 	 */
-	@Query(value = "select * from product where tipo_suscripcion = 1", nativeQuery = true)
+	@Query(value = "select * from product where subscription_type = 1", nativeQuery = true)
 	public List<Product> findPremiumProducts();
 
 }

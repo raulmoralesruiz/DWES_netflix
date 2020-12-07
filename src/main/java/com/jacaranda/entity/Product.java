@@ -15,25 +15,25 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProduct;
 	private String title;
-	private Category categoria;
-	private TipoContenido tipoContenido;
-	private SuscriptionEnum tipoSuscripcion;  
+	private Category category;
+	private ContentType contentType;
+	private SubscriptionEnum subscriptionType;  
 
 	public Product() {
 		super();
 	}
-	public Product(SuscriptionEnum tipoSuscripcion) {
+	public Product(SubscriptionEnum subscriptionType) {
 		this();
-		this.tipoSuscripcion = tipoSuscripcion;
+		this.subscriptionType = subscriptionType;
 	}
-	public Product(String title, Category categoria, 
-			TipoContenido tipoContenido,
-			SuscriptionEnum tipoSuscripcion) {
+	public Product(String title, Category category, 
+			ContentType contentType,
+			SubscriptionEnum subscriptionType) {
 		super();
 		this.title = title;
-		this.categoria = categoria;
-		this.tipoContenido = tipoContenido;
-		this.tipoSuscripcion = tipoSuscripcion;
+		this.category = category;
+		this.contentType = contentType;
+		this.subscriptionType = subscriptionType;
 	}
 
 
@@ -57,23 +57,23 @@ public class Product implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Category getCategoria() {
-		return categoria;
+	public Category getCategory() {
+		return category;
 	}
-	public void setCategoria(Category categoria) {
-		this.categoria = categoria;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	public TipoContenido getTipoContenido() {
-		return tipoContenido;
+	public ContentType getContentType() {
+		return contentType;
 	}
-	public void setTipoContenido(TipoContenido tipoContenido) {
-		this.tipoContenido = tipoContenido;
+	public void setContentType(ContentType contentType) {
+		this.contentType = contentType;
 	}
-	public SuscriptionEnum getTipoSuscripcion() {
-		return tipoSuscripcion;
+	public SubscriptionEnum getSubscriptionType() {
+		return subscriptionType;
 	}
-	public void setTipoSuscripcion(SuscriptionEnum tipoSuscripcion) {
-		this.tipoSuscripcion = tipoSuscripcion;
+	public void setSubscriptionType(SubscriptionEnum subscriptionType) {
+		this.subscriptionType = subscriptionType;
 	}
 	
 	

@@ -32,10 +32,10 @@ public class Customer implements Serializable {
 	private String city;
 	private String dni;
 	
-	@OneToOne(targetEntity = Suscription.class)
-	private Suscription suscription;
+	@OneToOne(targetEntity = Subscription.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Subscription subscription;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(targetEntity = Visual.class, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Visual> visuals;
 
 	@OneToMany
@@ -48,14 +48,14 @@ public class Customer implements Serializable {
 	public Customer() {
 	}
 	
-	public Customer(String username, String name, String surname, String address, String city, String dni, Suscription suscription) {
+	public Customer(String username, String name, String surname, String address, String city, String dni, Subscription subscription) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.address = address;
 		this.city = city;
 		this.dni = dni;
-		this.suscription = suscription;
+		this.subscription = subscription;
 		this.visuals = new ArrayList<Visual>();
 	}
 
@@ -110,17 +110,11 @@ public class Customer implements Serializable {
 	public void setVisuals(List<Visual> visuals) {
 		this.visuals = visuals;
 	}
-//	public SuscriptionEnum getTipoSuscripcion() {
-//		return tipoSuscripcion;
-//	}
-//	public void setTipoSuscripcion(SuscriptionEnum tipoSuscripcion) {
-//		this.tipoSuscripcion = tipoSuscripcion;
-//	}
-	public Suscription getSuscription() {
-		return suscription;
+	public Subscription getSubscription() {
+		return subscription;
 	}
-	public void setSuscription(Suscription suscription) {
-		this.suscription = suscription;
+	public void setSubscription(Subscription subscription) {
+		this.subscription = subscription;
 	}
 
 	public List<Document> getDocuments() {
@@ -133,100 +127,4 @@ public class Customer implements Serializable {
 	
 	
 	
-	
-	
-	
-	
-//	public void addVisual(Visual v) {
-//		visuals.add(v);
-//	}
-	
-//	public int contadorVisuals() {
-//		int cont = 0;
-//
-//		for (Visual v : visuals) {
-//			if (v.getProducto().getIdProduct() >= 0) {
-//				cont++;
-//			}
-//		}
-//		return cont;
-//	}
-
-	
-	
 }
-
-
-
-
-// OLD
-//{
-//    "name": "Alvaro",
-//    "surname": "Rueda",
-//    "birthdate": null,
-//    "address": "Calle Falsa 123, Brenes",
-//    "city": "Sevilla",
-//    "dni": "987987987",
-//    "country": "Spain",
-//    "mobileNumber": "666555444",
-//    "gender": "Masculino",
-//    "tipoSuscripcion": "BASIC"
-//}
-
-
-//private LocalDate birthdate;
-//private String country;
-//private String mobileNumber;
-//private String gender;
-
-//public Customer(String name, String surname, String city, String dni, SuscriptionEnum tipoSuscripcion) {
-//super();
-//this.name = name;
-//this.surname = surname;
-//this.city = city;
-//this.dni = dni;
-//this.tipoSuscripcion = tipoSuscripcion;
-//this.visuals = new ArrayList<Visual>();
-//}
-
-//public Customer(String name, String surname, LocalDate birthdate, String address, String city, String dni,
-//	String country, String mobileNumber, String gender, SuscriptionEnum tipoSuscripcion) {
-//super();
-//this.name = name;
-//this.surname = surname;
-//this.birthdate = birthdate;
-//this.address = address;
-//this.city = city;
-//this.dni = dni;
-//this.country = country;
-//this.mobileNumber = mobileNumber;
-//this.gender = gender;
-//this.tipoSuscripcion = tipoSuscripcion;
-//this.visuals = new ArrayList<Visual>();
-//}
-
-
-//public LocalDate getBirthdate() {
-//	return birthdate;
-//}
-//public void setBirthdate(LocalDate birthdate) {
-//	this.birthdate = birthdate;
-//}
-//public String getCountry() {
-//	return country;
-//}
-//public void setCountry(String country) {
-//	this.country = country;
-//}
-//public String getMobileNumber() {
-//	return mobileNumber;
-//}
-//public void setMobileNumber(String mobileNumber) {
-//	this.mobileNumber = mobileNumber;
-//}
-//public String getGender() {
-//	return gender;
-//}
-//public void setGender(String gender) {
-//	this.gender = gender;
-//}

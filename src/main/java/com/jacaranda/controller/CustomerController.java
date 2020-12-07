@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jacaranda.service.IService;
 import com.jacaranda.entity.Customer;
 import com.jacaranda.entity.Document;
-import com.jacaranda.entity.Suscription;
+import com.jacaranda.entity.Subscription;
 import com.jacaranda.entity.Visual;
 import com.jacaranda.service.CustomerService;
 
@@ -250,9 +250,9 @@ public class CustomerController {
 	 * @return ResponseEntity<?>
 	 */
 	@CrossOrigin(origins = "*")
-	@GetMapping("/suscription")
-	public ResponseEntity<?> getSuscriptions() {
-		return customerService.getSuscriptions();
+	@GetMapping("/subscription")
+	public ResponseEntity<?> getSubscriptions() {
+		return customerService.getSubscriptions();
 	}
 		
 	
@@ -262,9 +262,9 @@ public class CustomerController {
 	 * @param idCustomer
 	 * @return ResponseEntity<?>
 	 */
-	@GetMapping("/suscription/c{idCustomer}")
-	public ResponseEntity<?> getCustomerSuscription(@PathVariable Long idCustomer) {
-		return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerSuscription(idCustomer));
+	@GetMapping("/subscription/c{idCustomer}")
+	public ResponseEntity<?> getCustomerSubscription(@PathVariable Long idCustomer) {
+		return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerSubscription(idCustomer));
 	}
 
 	
@@ -274,16 +274,16 @@ public class CustomerController {
 	/**
 	 * POST. Inserta una suscripción a un cliente
 	 * 
-	 * @param newSuscription
+	 * @param newSubscription
 	 * @param idCustomer
 	 * @return ResponseEntity<?>
 	 */
 	@CrossOrigin(origins = "*")
-	@PostMapping("/suscription/c{idCustomer}")
-	public ResponseEntity<?> addSuscription(@RequestBody Suscription newSuscription, @PathVariable Long idCustomer) {
+	@PostMapping("/subscription/c{idCustomer}")
+	public ResponseEntity<?> addSubscription(@RequestBody Subscription newSubscription, @PathVariable Long idCustomer) {
 		
 		ResponseEntity<?> response = null;
-		Customer resultado = customerService.addSuscription(newSuscription, idCustomer);
+		Customer resultado = customerService.addSubscription(newSubscription, idCustomer);
 		
 		if (resultado == null) {
 			response = ResponseEntity.status(HttpStatus.CONFLICT).body("ERROR. No se puede asignar otra suscripción al cliente");
@@ -308,9 +308,9 @@ public class CustomerController {
 	 * 
 	 * @param id
 	 */
-	@DeleteMapping("/suscription/c{idCustomer}")
-	public void deleteSuscription(@PathVariable Long idCustomer){
-		customerService.deleteSuscription(idCustomer);
+	@DeleteMapping("/subscription/c{idCustomer}")
+	public void deleteSubscription(@PathVariable Long idCustomer){
+		customerService.deleteSubscription(idCustomer);
 	}
 	
 	// ----------------------------------------------- CRUD SUSCRIPTION ----------------------------------------------
