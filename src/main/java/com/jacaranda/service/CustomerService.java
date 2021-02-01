@@ -150,7 +150,6 @@ public class CustomerService extends AbstractServiceUtils implements IService<Cu
 		
 		// se guarda el cliente en una variable auxiliar
 		Customer auxCustomer = customerRepo.findCustomerById(idCustomer);
-//		Customer auxCustomer = customerRepo.findById(idCustomer).get();
 
 		// se comprueba si el cliente tiene visualizaciones.
 		if (!auxCustomer.getVisuals().isEmpty()) {
